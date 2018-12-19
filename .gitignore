@@ -1,0 +1,17 @@
+# Maven
+target/
+
+# Eclipse
+.settings/
+.classpath
+.project
+
+# IntelliJ IDEA
+.idea
+*.iml
+
+# Branch switching
+generated/
+
+# log files
+hms-users-service/users-service.log
