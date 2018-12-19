@@ -38,7 +38,7 @@
 		<node.version>v8.8.1</node.version>
 		
     </properties>	
-	
+<!-- 	
 	<dependencyManagement>
 		<dependencies>
             <dependency>
@@ -76,14 +76,14 @@
             </dependency>
 		</dependencies>
 	</dependencyManagement>	
-	
-
+	 -->
+<!-- 
     <profiles>
         <profile>
             <id>springboot</id>
             <activation>
                 <file>
-                    <!-- Just a way to identify a Spring Boot application -->
+                    Just a way to identify a Spring Boot application
                     <exists>src/main/resources/bootstrap.yml</exists>
                 </file>
             </activation>
@@ -97,7 +97,7 @@
                         </configuration>
                         <executions>
                             <execution>
-                                <!-- Spring Boot Actuator displays build-related information if a META-INF/build-info.properties file is present -->
+                                Spring Boot Actuator displays build-related information if a META-INF/build-info.properties file is present
                                 <goals>
                                     <goal>build-info</goal>
                                 </goals>
@@ -113,7 +113,7 @@
                         </executions>
                     </plugin>
 
-                    <!-- Spring Boot Actuator displays build-related information if a META-INF/build-info.properties file is present -->
+                    Spring Boot Actuator displays build-related information if a META-INF/build-info.properties file is present
                     <plugin>
                         <groupId>pl.project13.maven</groupId>
                         <artifactId>git-commit-id-plugin</artifactId>
@@ -137,5 +137,5 @@
         </profile>
 
     </profiles>	
-	
+	 -->
 </project>
