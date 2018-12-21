@@ -21,6 +21,7 @@
 		<module>resource</module>
 		<module>admin</module>
 		<module>config</module>
+		<module>discovery</module>
 	</modules>
 	
     <properties>

@@ -12,11 +12,20 @@ spring:
 zuul:
   routes:
     ui:
-      url: http://localhost:8081
+#      url: http://localhost:8081
+      path: /ui/**
       sensitive-headers:
+      serviceId: ui
     admin:
-      url: http://localhost:8082
+#      url: http://localhost:8082
+      path: /admin/**
       sensitive-headers:
+      serviceId: admin
     resource:
-      url: http://localhost:9000
+#      url: http://localhost:9000
+      path: /resource/**
       sensitive-headers:
+      serviceId: resource
+      
+      
+    

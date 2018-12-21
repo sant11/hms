@@ -1,12 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   
-  <groupId>com.sant.hms.config</groupId>
-  <artifactId>config</artifactId>
+  <groupId>com.sant.hms.discovery</groupId>
+  <artifactId>discovery</artifactId>
   <packaging>jar</packaging>
   
-  <name>config</name>
-  <description>Config Module</description>
+  <name>discovery</name>
+  <description>Discovery Module</description>
+    
     
   <parent>
     <groupId>com.sant.hms</groupId>
@@ -32,9 +33,9 @@
                 <scope>import</scope>
             </dependency>
         </dependencies>
-    </dependencyManagement>  
+    </dependencyManagement>    
   
-	<dependencies>
+    <dependencies>
         <!-- Spring Boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -43,17 +44,15 @@
         </dependency>
 
         <!-- Spring Cloud -->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-config-server</artifactId>
-		</dependency>
-
-        <!-- Third-party librairies -->
         <dependency>
-            <groupId>org.jolokia</groupId>
-            <artifactId>jolokia-core</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
         </dependency>
 
-	</dependencies>  
-  
+    </dependencies>
+      
 </project>

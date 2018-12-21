@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @SpringBootApplication
 @Controller
 @EnableZuulProxy
+@EnableDiscoveryClient
 public class GatewayApplication {
 
   @RequestMapping("/user")

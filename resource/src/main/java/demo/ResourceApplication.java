@@ -13,6 +13,7 @@ import org.springframework.boot.actuate.trace.WebRequestTraceFilter;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.boot.autoconfigure.web.ErrorAttributes;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @RestController
+@EnableDiscoveryClient
 public class ResourceApplication extends WebSecurityConfigurerAdapter {
 
 	private String message = "Hello World";
@@ -59,10 +61,11 @@ public class ResourceApplication extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// We need this to prevent the browser from popping up a dialog on a 401
-		http.httpBasic().disable().csrf()
-				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
-		http.authorizeRequests().antMatchers(HttpMethod.POST, "/**").hasRole("WRITER")
-				.anyRequest().authenticated();
+//		http.httpBasic().disable().csrf()
+//				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+//		http.authorizeRequests().antMatchers(HttpMethod.POST, "/**").hasRole("WRITER")
+//				.anyRequest().authenticated();
+		http.authorizeRequests().antMatchers("/**").permitAll();
 	}
 
 	@Bean
