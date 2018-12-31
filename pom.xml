@@ -22,6 +22,8 @@
 		<module>admin</module>
 		<module>config</module>
 		<module>discovery</module>
+		<module>monitoring</module>
+		<module>tracing</module>
 	</modules>
 	
     <properties>
