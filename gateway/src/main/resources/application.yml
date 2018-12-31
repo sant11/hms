@@ -16,16 +16,15 @@ zuul:
       path: /ui/**
       sensitive-headers:
       serviceId: ui
-    admin:
+    adminui:
 #      url: http://localhost:8082
-      path: /admin/**
+      path: /adminui/**
       sensitive-headers:
-      serviceId: admin
+      serviceId: adminui
     resource:
 #      url: http://localhost:9000
       path: /resource/**
       sensitive-headers:
       serviceId: resource
-      
       
     

@@ -2,3 +2,36 @@ redis:
   image: redis
   ports:
     - "6379:6379"
+services:
+  config-server:
+    image: hms/config-server
+    container_name: config-server
+    ports:
+     - 8888:8888
+  discovery-server:
+    image: hms/discovery-server
+    container_name: discovery-server
+    links:
+     - config-server
+    depends_on:
+      - config-server
+    entrypoint: ["./wait-for-it.sh","config-server:8888","--timeout=60","--","java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+    ports:
+     - 8761:8761  
+     
+     
+     
+     
+     
+      
+  users-db:
+    image: postgres:9.5
+    container_name: users-db
+    ports:
+     - 5433:5432
+    environment:
+      - POSTGRES_USER=sant
+      - POSTGRES_PASSWORD=sant
+      - POSTGRES_DB=hms
+    volumes:
+       - /var/lib/postgresql/data

@@ -24,9 +24,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.slf4j.Slf4j;
+
 @SpringBootApplication
 @RestController
 @EnableDiscoveryClient
+@Slf4j
 public class ResourceApplication extends WebSecurityConfigurerAdapter {
 
 	private String message = "Hello World";
@@ -34,6 +37,7 @@ public class ResourceApplication extends WebSecurityConfigurerAdapter {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public Message home() {
+		log.info("getting message");
 		return new Message(message);
 	}
 
