@@ -1,4 +1,4 @@
-package demo;
+package com.sant.hms.ui;
 
 import java.security.Principal;
 import java.util.Collections;
@@ -8,18 +8,23 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.client.support.BasicAuthorizationInterceptor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 @Controller
 @EnableDiscoveryClient
+//@EnableEurekaClient
 public class UiApplication {
 
   @GetMapping(value = "/{path:[^\\.]*}")
@@ -51,5 +56,19 @@ public class UiApplication {
       // @formatter:on
     }
   }
+  
+  
+  
+//  @LoadBalanced
+  @Bean
+  RestTemplate restTemplate() {
+	  
+	  RestTemplate restTemplate = new RestTemplate();
+	  
+	  BasicAuthorizationInterceptor bai = new BasicAuthorizationInterceptor("user", "password");
+	  restTemplate.getInterceptors().add(bai);
+	  
+      return restTemplate;
+  }  
 
 }

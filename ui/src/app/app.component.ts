@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 export class AppComponent {
   title = 'Demo';
   greeting = {};
+  message = {};
   authenticated = false;
   user = '';
   constructor(private http: HttpClient) {
@@ -16,6 +17,7 @@ export class AppComponent {
       if (data['name']) {
         this.authenticated = true;
         http.get('/resource').subscribe(response => this.greeting = response);
+        http.get('/ui/message').subscribe(response => this.message = response);
       } else {
         this.authenticated = false;
       }

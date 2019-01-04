@@ -1,0 +1,26 @@
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl: 
+      defaultZone: http://discUser:discPassword@localhost:8761/eureka/
+#    
+#security:
+#  sessions: ALWAYS
+#  ignored:
+#  - "*.bundle.*"
+#  - favicon.ico
+spring:
+  session:
+    store-type: redis
+  cloud: 
+    config:
+      uri: http://localhost:8888
+      username: configUser
+      password: configPassword
+        
+server:
+  port: 8761
+  
+  
+    

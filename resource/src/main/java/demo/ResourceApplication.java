@@ -65,10 +65,19 @@ public class ResourceApplication extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// We need this to prevent the browser from popping up a dialog on a 401
+		
+		 http.httpBasic().disable().authorizeRequests()
+		  .antMatchers("/**").hasAnyRole("USER","ADMIN", "ROLE_WRITER")
+	      .antMatchers(HttpMethod.POST, "/**").hasRole("WRITER").anyRequest()
+	      .authenticated().and().csrf().disable();
+		 
+		/*
 		http.httpBasic().disable().csrf()
 				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 		http.authorizeRequests().antMatchers(HttpMethod.POST, "/**").hasRole("WRITER")
 				.anyRequest().authenticated();
+		*/
+		
 //		http.authorizeRequests().antMatchers("/**").permitAll();
 	}
 

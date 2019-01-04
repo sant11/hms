@@ -1,3 +1,7 @@
+management:
+  security: 
+    sessions: always
+
 logging:
   level:
     org.springframework.security: DEBUG
@@ -9,22 +13,44 @@ security:
 spring:
   session:
     store-type: redis
+  cloud: 
+    config:
+#      uri: http://localhost:8888
+      username: configUser
+      password: configPassword
 zuul:
   routes:
     ui:
 #      url: http://localhost:8081
       path: /ui/**
-      sensitive-headers:
+      sensitive-headers: Set-Cookie,Authorization
       serviceId: ui
     adminui:
 #      url: http://localhost:8082
       path: /adminui/**
-      sensitive-headers:
+      sensitive-headers: Set-Cookie,Authorization
       serviceId: adminui
     resource:
 #      url: http://localhost:9000
       path: /resource/**
-      sensitive-headers:
+      sensitive-headers: Set-Cookie,Authorization
       serviceId: resource
-      
+    discovery:
+#      url: http://localhost:9000
+      path: /discovery/**
+      sensitive-headers: Set-Cookie,Authorization
+      serviceId: discovery
+      url: http://localhost:8761
+    gateway:
+#      url: http://localhost:9000
+      path: /gateway/**
+      sensitive-headers: Set-Cookie,Authorization
+      serviceId: gateway
+     
+                 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discUser:discPassword@localhost:8761/eureka/      
+ 
     
