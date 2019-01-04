@@ -25,9 +25,9 @@ public class GreetingControllerImpl implements GreetingController {
 	@Override
 	public Message getMessage() {
 		
-		InstanceInfo instanceInfo = eurekaClient.getNextServerFromEureka("gateway",false);
+		InstanceInfo instanceInfo = eurekaClient.getNextServerFromEureka("resource",false);
 		
-		String path = instanceInfo.getHomePageUrl() + "resource";
+		String path = instanceInfo.getHomePageUrl();// + "resource";
 		
 		Message message = restTemplate.getForObject(path, Message.class);
 		
