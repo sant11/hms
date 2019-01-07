@@ -4,7 +4,9 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -20,6 +22,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +44,13 @@ public class ResourceApplication extends WebSecurityConfigurerAdapter {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public Message home() {
 		log.info("getting message");
+		
+		String user = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+		
+		Set<String> roles = AuthorityUtils.authorityListToSet( SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+		
+		log.info("----------> getting message - logged user: {}, roles: {}", user, roles.stream().collect(Collectors.joining(",")));
+		
 		return new Message(message);
 	}
 

@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: turbine
+  cloud:
+    config:
+      uri: http://config-server:8888    
+#      uri: ${vcap.services.${PREFIX:}configserver.credentials.uri:http://user:password@localhost:8888}

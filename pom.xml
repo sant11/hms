@@ -24,6 +24,7 @@
 		<module>discovery</module>
 		<module>monitoring</module>
 		<module>tracing</module>
+		<module>turbine</module>
 	</modules>
 	
     <properties>
