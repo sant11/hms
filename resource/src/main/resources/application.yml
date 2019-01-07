@@ -20,7 +20,11 @@ spring:
   redis:
     host: localhost
     port: 6379       
+  rabbitmq:
+    username: user
+    password: bitnami        
     
 logging:
   level: 
     org.springframework.security: DEBUG
+    

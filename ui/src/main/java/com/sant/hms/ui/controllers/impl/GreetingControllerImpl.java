@@ -1,13 +1,13 @@
 package com.sant.hms.ui.controllers.impl;
 
-import java.util.Collection;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,8 +16,11 @@ import org.springframework.web.client.RestTemplate;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.sant.hms.ui.controllers.GreetingController;
 import com.sant.hms.ui.pojo.Message;
+import com.sant.hms.ui.rabbitmq.RabbitMqConfig;
+import com.sant.hms.ui.rabbitmq.Receiver;
 
 @RestController
 public class GreetingControllerImpl implements GreetingController {
@@ -29,7 +32,16 @@ public class GreetingControllerImpl implements GreetingController {
     @Autowired
     private EurekaClient eurekaClient;
     
-    @HystrixCommand(fallbackMethod = "fallbackMessage")
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    private Receiver receiver;
+    
+    @HystrixCommand(fallbackMethod = "fallbackMessage",
+    	    commandProperties = {
+    	            @HystrixProperty(name="execution.isolation.strategy", value="SEMAPHORE")
+    	        })
 	@Override
 	public Message getMessage() {
 		
@@ -51,5 +63,20 @@ public class GreetingControllerImpl implements GreetingController {
     public Message fallbackMessage() {
         return new Message("Send default message");
       }
+
+//    @HystrixCommand(fallbackMethod = "fallbackMessage")
+	@Override
+	public Message getMessageMQ() {
+
+		String exampleMessage = "Hello from RabbitMQ!";
+    	
+		log.info("Sending message: {}", exampleMessage);
+    	
+		rabbitTemplate.convertAndSend(RabbitMqConfig.topicExchangeName, "com.sant.test", exampleMessage);
+    	
+    	return null;
+	}
 	
+    
+
 }

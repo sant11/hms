@@ -9,5 +9,6 @@ public interface GreetingController {
 	@GetMapping("/message")
 	Message getMessage();
 	
-	
+	@GetMapping("/messagemq")
+	Message getMessageMQ();
 }

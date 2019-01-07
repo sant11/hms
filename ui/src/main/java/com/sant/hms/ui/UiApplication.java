@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import com.sant.hms.ui.rabbitmq.Receiver;
+
 @SpringBootApplication
 @Controller
 @EnableDiscoveryClient
@@ -74,5 +76,5 @@ public class UiApplication {
 	  
       return restTemplate;
   }  
-
+  
 }

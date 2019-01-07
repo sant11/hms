@@ -3,6 +3,11 @@ server:
 spring:
   session:
     store-type: redis
+  rabbitmq:
+    username: user
+    password: bitnami    
+    
+        
 logging:
   level:
     org.springframework.security: DEBUG
