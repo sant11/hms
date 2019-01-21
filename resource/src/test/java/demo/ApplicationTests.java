@@ -2,6 +2,7 @@ package demo;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.context.embedded.LocalServerPort;
@@ -22,6 +23,7 @@ public class ApplicationTests {
 
 	private TestRestTemplate template = new TestRestTemplate();
 
+	@Ignore
 	@Test
 	public void resourceProtected() {
 		ResponseEntity<String> response = template.getForEntity("http://localhost:{port}/", String.class, port);

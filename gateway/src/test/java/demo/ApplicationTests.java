@@ -3,6 +3,7 @@ package demo;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -35,7 +36,7 @@ public class ApplicationTests {
 	    template.getRestTemplate().getInterceptors().add(bai);
 	}
 	
-	
+	@Ignore
 	@Test
 	public void homePageLoads() {
 		ResponseEntity<String> response = template.getForEntity("http://localhost:"

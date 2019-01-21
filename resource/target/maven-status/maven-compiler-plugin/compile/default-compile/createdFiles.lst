@@ -1,3 +1,6 @@
 demo/ResourceApplication.class
 demo/Message.class
 demo/Change.class
+demo/Receiver.class
+demo/SessionConfig.class
+demo/RabbitMqConfig.class

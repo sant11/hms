@@ -1,2 +1,4 @@
 demo/GatewayApplication.class
+demo/SessionSavingZuulPreFilter.class
+demo/SessionConfig.class
 demo/GatewayApplication$SecurityConfiguration.class

@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -45,6 +46,7 @@ public class ApplicationTests {
 	    template.getRestTemplate().getInterceptors().add(bai);
 	}
 	
+	@Ignore
 	@Test
 	public void homePageLoads() {
 		template = new TestRestTemplate();
@@ -53,6 +55,7 @@ public class ApplicationTests {
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
 
+	@Ignore
 	@Test
 	public void userEndpointProtected() {
 		template = new TestRestTemplate();
@@ -61,6 +64,7 @@ public class ApplicationTests {
 		assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
 	}
 
+	@Ignore
 	@Test
 	public void resourceEndpointProtected() {
 		template = new TestRestTemplate();
@@ -69,6 +73,7 @@ public class ApplicationTests {
 		assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
 	}
 
+	@Ignore
 	@Test
 	public void loginSucceeds() {
 		

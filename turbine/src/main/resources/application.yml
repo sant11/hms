@@ -52,3 +52,20 @@ spring:
 #  profiles: cloud
 #management:
 #  port: -1      
+
+---
+spring:
+  profiles: docker
+  redis:
+    host: redis
+    port: 6379   
+  zipkin:
+    baseUrl: http://tracing:9411/
+    
+eureka:
+  client:
+    region: default
+    registryFetchIntervalSeconds: 5
+    serviceUrl: 
+      defaultZone: http://discUser:discPassword@discovery:8761/eureka/      
+        

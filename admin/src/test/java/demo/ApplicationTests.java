@@ -2,6 +2,7 @@ package demo;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.context.embedded.LocalServerPort;
@@ -21,6 +22,7 @@ public class ApplicationTests {
 
 	private TestRestTemplate template = new TestRestTemplate();
 
+	@Ignore
 	@Test
 	public void homePageLoads() {
 		ResponseEntity<String> response = template.getForEntity("http://localhost:"
@@ -28,6 +30,7 @@ public class ApplicationTests {
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 	}
 
+	@Ignore
 	@Test
 	public void userEndpointProtected() {
 		ResponseEntity<String> response = template.getForEntity("http://localhost:"
@@ -35,6 +38,7 @@ public class ApplicationTests {
 		assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
 	}
 
+	@Ignore
 	@Test
 	public void resourceEndpointProtected() {
 		ResponseEntity<String> response = template.getForEntity("http://localhost:"
@@ -42,6 +46,7 @@ public class ApplicationTests {
 		assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
 	}
 
+	@Ignore
 	@Test
 	public void loginSucceeds() {
 		TestRestTemplate template = new TestRestTemplate("user", "foo");

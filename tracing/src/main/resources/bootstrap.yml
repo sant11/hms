@@ -3,7 +3,7 @@ spring:
     config:
       uri: http://localhost:8888
   application:
-    name: tracing-server
+    name: tracing
 ---
 spring:
   profiles: docker

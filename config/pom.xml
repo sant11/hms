@@ -14,6 +14,11 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   
+    <properties>
+        <docker.image.exposed.port>8888</docker.image.exposed.port>
+        <docker.image.dockerfile.dir>${basedir}/../docker</docker.image.dockerfile.dir>
+    </properties>
+      
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -61,6 +66,26 @@
             <artifactId>jolokia-core</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
+        </dependency>		
 	</dependencies>  
+	
+    <profiles>
+        <profile>
+            <id>buildDocker</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.spotify</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <version>${docker.plugin.version}</version>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    	
   
 </project>

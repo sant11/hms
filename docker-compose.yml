@@ -1,37 +1,177 @@
-redis:
-  image: redis
-  ports:
-    - "6379:6379"
+version: '3'
+
 services:
-  config-server:
-    image: hms/config-server
-    container_name: config-server
+  rabbit:
+    image: 'bitnami/rabbitmq:latest'
+    hostname: rabbit
+    container_name: rabbit      
+    labels:
+      kompose.service.type: nodeport
     ports:
-     - 8888:8888
-  discovery-server:
-    image: hms/discovery-server
-    container_name: discovery-server
+#      - '4369:4369'
+      - '5672:5672'
+#      - '25672:25672'
+      - '15672:15672'
+    environment:
+      RABBITMQ_DEFAULT_USER : user
+      RABBITMQ_DEFAULT_PASS : bitnami
+    volumes:
+      - 'rabbitmq_data:/bitnami'
+    
+  redis:
+    image: redis
+    command: redis-server /usr/local/etc/redis/redis.conf
+    container_name: redis    
+    ports:
+      - "6379:6379"
+    volumes:
+      - ${PWD}/redis.conf:/usr/local/etc/redis/redis.conf    
+
+    
+#  config:
+#    image: hms/config
+#    container_name: config
+##    links:
+##     - redis
+##     - discovery
+##    depends_on:
+##      - redis
+##      - discovery
+#    entrypoint: ["./wait-for-it.sh","discovery:8761","--timeout=60","--","java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+#    ports:
+#     - 8888:8888
+     
+  discovery:
+    build: .
+    image: hms/discovery
+    container_name: discovery
     links:
-     - config-server
+#      - config
+      - redis
     depends_on:
-      - config-server
-    entrypoint: ["./wait-for-it.sh","config-server:8888","--timeout=60","--","java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+#      - config
+      - redis
+    entrypoint: ["./wait-for-it.sh","redis:6379","--timeout=15","--","java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
     ports:
      - 8761:8761  
      
-     
-     
-     
-     
-      
-  users-db:
-    image: postgres:9.5
-    container_name: users-db
+  gateway:
+    image: hms/gateway
+    container_name: gateway
+    links:
+     - redis
+#     - config
+     - discovery
+     - tracing
+    depends_on:
+     - redis
+#     - config
+     - discovery
+     - tracing     
+    entrypoint: ["./wait-for-it.sh","discovery:8761","--timeout=60","--","java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
     ports:
-     - 5433:5432
-    environment:
-      - POSTGRES_USER=sant
-      - POSTGRES_PASSWORD=sant
-      - POSTGRES_DB=hms
-    volumes:
-       - /var/lib/postgresql/data
+     - 8180:8180     
+     
+  ui:
+    image: hms/ui
+    container_name: ui
+    links:
+#     - config
+     - discovery
+     - redis     
+     - tracing
+    depends_on:
+#     - config
+     - discovery
+     - redis  
+     - tracing        
+    entrypoint: ["./wait-for-it.sh","discovery:8761","--timeout=60","--","java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+    ports:
+     - 8081:8081         
+
+#  ui-second:
+#    image: hms/ui
+#    container_name: ui-second
+#    links:
+##     - config
+#     - discovery
+#     - redis     
+#     - tracing
+#    depends_on:
+##     - config
+#     - discovery
+#     - redis     
+#    entrypoint: ["./wait-for-it.sh","discovery:8761","--timeout=60","--","java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+#    ports:
+#     - 8181:8081         
+ 
+   
+  resources:
+    image: hms/resources
+    container_name: resources
+    links:
+#     - config
+     - discovery
+     - redis     
+     - rabbit
+     - tracing
+    depends_on:
+#     - config
+     - discovery
+     - redis     
+     - rabbit
+     - tracing          
+    entrypoint: ["./wait-for-it.sh","discovery:8761","--timeout=60","--","java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+    ports:
+     - 9000:9000      
+
+
+  admin:
+    image: hms/admin
+    container_name: admin
+    links:
+#     - config
+     - discovery
+     - redis     
+     - tracing
+    depends_on:
+#     - config
+     - discovery
+     - redis
+     - tracing
+    entrypoint: ["./wait-for-it.sh","discovery:8761","--timeout=60","--","java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+    ports:
+     - 8082:8082      
+          
+      
+  tracing:
+    image: hms/tracing
+    container_name: tracing
+    links:
+#     - config
+     - discovery
+    depends_on:
+#     - config
+     - discovery
+    entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=60","--","java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+    ports:
+     - 9411:9411  
+
+#  turbine:
+#    image: hms/turbine
+#    container_name: turbine
+#    links:
+##     - config
+#     - discovery
+#    depends_on:
+##     - config
+#     - discovery
+#    entrypoint: ["./wait-for-it.sh","discovery-server:8761","--timeout=60","--","java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+#    ports:
+#     - 8989:8989  
+
+
+volumes:
+  rabbitmq_data:
+    driver: local   
+   

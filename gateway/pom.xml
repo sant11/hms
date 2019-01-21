@@ -16,6 +16,13 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
+  <properties>  
+  		<docker.image.prefix>hms</docker.image.prefix>
+        <docker.image.exposed.port>8180</docker.image.exposed.port>
+        <docker.image.dockerfile.dir>${basedir}/../docker</docker.image.dockerfile.dir>
+		<docker.plugin.version>0.4.13</docker.plugin.version>
+  </properties>
+  
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -89,12 +96,17 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-sleuth</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
+        </dependency>		        
+        
 		<dependency>
 		    <groupId>io.rest-assured</groupId>
 		    <artifactId>rest-assured</artifactId>
 		    <version>3.0.0</version>
 		    <scope>test</scope>
-		</dependency>        
+		</dependency>
     </dependencies>
 
     <build>
@@ -172,4 +184,23 @@
             </snapshots>
         </repository>
     </repositories>
+    
+    <profiles>
+        <profile>
+            <id>buildDocker</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.spotify</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <version>${docker.plugin.version}</version>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+  
+      
+    
+    
 </project>

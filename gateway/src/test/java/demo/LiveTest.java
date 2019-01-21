@@ -9,6 +9,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 
@@ -33,7 +34,7 @@ public class LiveTest {
 	        Assert.assertEquals(HttpStatus.OK.value(), response.getStatusCode());
 	        Assert.assertNotNull(response.getBody());
 	    }*/
-	    
+	    @Ignore
 	    @Test
 	    public void whenAccessProtectedResourceAfterLogin_thenSuccess() {
 	        final Response response = RestAssured.given()
